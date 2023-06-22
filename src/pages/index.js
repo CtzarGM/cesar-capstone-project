@@ -50,6 +50,7 @@ export default function Home() {
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
+          <p>Use wasd to move up, left, down or right</p>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px' }}>nav</div>
         </div>
         {/* <div className={styles.description}>
