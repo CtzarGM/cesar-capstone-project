@@ -13,10 +13,10 @@ export default function Home() {
       const navAvatar = document.getElementById("navAvatar");
       let currentKeys = [];
 
-      var UP = 'w';
-      var LEFT = 'a';
-      var DOWN = 's';
-      var RIGHT = 'd';
+      const UP = 'w';
+      const LEFT = 'a';
+      const DOWN = 's';
+      const RIGHT = 'd';
 
       let leftPos = parseInt(navAvatar.style.left);
       let topPos = parseInt(navAvatar.style.top);
