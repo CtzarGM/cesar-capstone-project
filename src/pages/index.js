@@ -2,10 +2,43 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  useEffect(() => {
+    if (document) {
+      const navAvatar = document.getElementById("navAvatar");
+      let currentKeys = [];
+
+      var UP = 'w';
+      var LEFT = 'a';
+      var DOWN = 's';
+      var RIGHT = 'd';
+
+      let leftPos = parseInt(navAvatar.style.left);
+      let topPos = parseInt(navAvatar.style.top);
+
+      function moveLoop() {
+        leftPos = parseInt(navAvatar.style.left);
+        topPos = parseInt(navAvatar.style.top);
+
+        if (currentKeys[LEFT]) navAvatar.style.left = leftPos - 3 + 'px';
+        if (currentKeys[RIGHT]) navAvatar.style.left = leftPos + 3 + 'px';
+        if (currentKeys[UP]) navAvatar.style.top = topPos - 3 + 'px';
+        if (currentKeys[DOWN]) navAvatar.style.top = topPos + 3 + 'px';
+
+        window.requestAnimationFrame(moveLoop);
+      }
+      window.requestAnimationFrame(moveLoop);
+
+      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; console.log(currentKeys) })
+      document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false })
+      window.addEventListener("DOMContentLoaded", () => { moveLoop() });
+    }
+  }, [])
 
   return (
     <>
@@ -19,7 +52,6 @@ export default function Home() {
         <div className={styles.container}>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px' }}>nav</div>
         </div>
-
         {/* <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
