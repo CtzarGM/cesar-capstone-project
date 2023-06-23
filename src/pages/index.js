@@ -18,23 +18,54 @@ export default function Home() {
       const DOWN = 's';
       const RIGHT = 'd';
 
-      let leftPos = parseInt(navAvatar.style.left);
-      let topPos = parseInt(navAvatar.style.top);
+      //document.querySelectorAll
+
+      const allDetectableBlocks = document.querySelectorAll(".detectable");
+      console.log(allDetectableBlocks);
+
+      function isColliding(block1, block2) {
+        return !(
+          block1.bottom < block2.top ||
+          block1.top > block2.bottom ||
+          block1.right < block2.left ||
+          block1.left > block2.right
+        );
+      }
+
+      function detectCollision() {
+        let me = navAvatar.getBoundingClientRect();
+
+        allDetectableBlocks.forEach((currentBlock) => {
+          let block = currentBlock.getBoundingClientRect();
+
+          if (isColliding(me, block)) {
+            currentBlock.style.background = 'green';
+            navAvatar.style.background = 'green'
+            console.log(navAvatar.style.background);
+          }
+          else {
+            currentBlock.style.background = 'red'
+            navAvatar.style.background = 'black'
+          }
+        })
+      }
 
       function moveLoop() {
-        leftPos = parseInt(navAvatar.style.left);
-        topPos = parseInt(navAvatar.style.top);
+        let leftPos = parseInt(navAvatar.style.left);
+        let topPos = parseInt(navAvatar.style.top);
 
         if (currentKeys[LEFT]) navAvatar.style.left = leftPos - 3 + 'px';
         if (currentKeys[RIGHT]) navAvatar.style.left = leftPos + 3 + 'px';
         if (currentKeys[UP]) navAvatar.style.top = topPos - 3 + 'px';
         if (currentKeys[DOWN]) navAvatar.style.top = topPos + 3 + 'px';
 
+        detectCollision();
+
         window.requestAnimationFrame(moveLoop);
       }
       window.requestAnimationFrame(moveLoop);
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; console.log(currentKeys) })
+      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys)  */ })
       document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
@@ -52,6 +83,9 @@ export default function Home() {
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px' }}>nav</div>
+          <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '100px', left: '1000px', background: 'red' }}>block1</div>
+          <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '400px', left: '700px', background: 'red' }}>block2</div>
+          <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '300px', background: 'red' }}>block3</div>
         </div>
         {/* <div className={styles.description}>
           <p>
@@ -146,7 +180,7 @@ export default function Home() {
             </p>
           </a>
         </div> */}
-      </main>
+      </main >
     </>
   )
 }
