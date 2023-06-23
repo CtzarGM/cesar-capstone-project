@@ -32,22 +32,33 @@ export default function Home() {
         );
       }
 
+
       function detectCollision() {
         let me = navAvatar.getBoundingClientRect();
-
         allDetectableBlocks.forEach((currentBlock) => {
           let block = currentBlock.getBoundingClientRect();
 
           if (isColliding(me, block)) {
             currentBlock.style.background = 'green';
-            navAvatar.style.background = 'green'
-            console.log(navAvatar.style.background);
           }
           else {
             currentBlock.style.background = 'red'
-            navAvatar.style.background = 'black'
           }
         })
+      }
+
+      function isPlayerColliding() {
+        let me = navAvatar.getBoundingClientRect();
+
+        if (Array.from(allDetectableBlocks).some(currentBlock => {
+          let block = currentBlock.getBoundingClientRect();
+          return isColliding(me, block)
+        })) {
+          navAvatar.style.background = 'green';
+        }
+        else {
+          navAvatar.style.background = 'black';
+        }
       }
 
       function moveLoop() {
@@ -60,12 +71,13 @@ export default function Home() {
         if (currentKeys[DOWN]) navAvatar.style.top = topPos + 3 + 'px';
 
         detectCollision();
+        isPlayerColliding();
 
         window.requestAnimationFrame(moveLoop);
       }
       window.requestAnimationFrame(moveLoop);
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys)  */ })
+      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; console.log(currentKeys) })
       document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
@@ -82,7 +94,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
-          <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px' }}>nav</div>
+          <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '100px', left: '1000px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '400px', left: '700px', background: 'red' }}>block2</div>
           <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '300px', background: 'red' }}>block3</div>
