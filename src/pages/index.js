@@ -47,7 +47,7 @@ export default function Home() {
         })
       }
 
-      function isPlayerColliding() {
+      function detectPlayerCollision() {
         let me = navAvatar.getBoundingClientRect();
 
         if (Array.from(allDetectableBlocks).some(currentBlock => {
@@ -71,7 +71,7 @@ export default function Home() {
         if (currentKeys[DOWN]) navAvatar.style.top = topPos + 3 + 'px';
 
         detectCollision();
-        isPlayerColliding();
+        detectPlayerCollision();
 
         window.requestAnimationFrame(moveLoop);
       }
