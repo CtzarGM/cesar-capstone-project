@@ -15,6 +15,15 @@
   background: black;
 }
 
+.testBlock {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  line-height: 6;
+  color: white;
+}
+
 /* .main {
   display: flex;
   flex-direction: column;
