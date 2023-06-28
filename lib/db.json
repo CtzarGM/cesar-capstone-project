@@ -1,0 +1,14 @@
+[
+  {
+    "name": "green",
+    "image": "background: 'green'"
+  },
+  {
+    "name": "blue",
+    "image": "background: 'blue'"
+  },
+  {
+    "name": "red",
+    "image": "background: 'red'"
+  }
+]
