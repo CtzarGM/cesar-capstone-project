@@ -95,11 +95,16 @@ export default function Home() {
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
-          <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '100px', left: '1000px', background: 'red' }}>block1</div>
-          <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '400px', left: '700px', background: 'red' }}>block2</div>
-          <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '300px', background: 'red' }}>block3</div>
+          <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
+          <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
+          <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '400px', background: 'red' }}>block3</div>
         </div>
-        {/* <div className={styles.description}>
+      </main >
+    </>
+  )
+}
+
+{/* <div className={styles.description}>
           <p>
             Get started by editing&nbsp;
             <code className={styles.code}>src/pages/index.js</code>
@@ -192,10 +197,6 @@ export default function Home() {
             </p>
           </a>
         </div> */}
-      </main >
-    </>
-  )
-}
 
 
 
