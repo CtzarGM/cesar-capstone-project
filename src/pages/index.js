@@ -11,17 +11,19 @@ export default function Home() {
   useEffect(() => {
     if (document) {
       const navAvatar = document.getElementById("navAvatar");
-      let currentKeys = [];
+      let isAvatarMoving = false;
+      let isAvatarInteracting = false;
 
+      let currentKeys = [];
       const UP = 'w';
       const LEFT = 'a';
       const DOWN = 's';
       const RIGHT = 'd';
+      const ACTION = 'e';
+      const BACK = 'q';
 
-      //document.querySelectorAll
-
+      let canMove = true;
       const allDetectableBlocks = document.querySelectorAll(".detectable");
-      console.log(allDetectableBlocks);
 
       function isColliding(block1, block2) {
         return !(
@@ -35,10 +37,14 @@ export default function Home() {
 
       function detectCollision() {
         let me = navAvatar.getBoundingClientRect();
-        allDetectableBlocks.forEach((currentBlock) => {
+        let blockCollisions = {};
+
+        Array.prototype.forEach.call(allDetectableBlocks, (currentBlock) => {
+          var collidingWithThisBlock = false;
           let block = currentBlock.getBoundingClientRect();
 
           if (isColliding(me, block)) {
+
             currentBlock.style.background = 'green';
           }
           else {
@@ -54,9 +60,11 @@ export default function Home() {
           let block = currentBlock.getBoundingClientRect();
           return isColliding(me, block)
         })) {
+          isAvatarInteracting = true;
           navAvatar.style.background = 'green';
         }
         else {
+          isAvatarInteracting = false;
           navAvatar.style.background = 'black';
         }
       }
@@ -65,10 +73,16 @@ export default function Home() {
         let leftPos = parseInt(navAvatar.style.left);
         let topPos = parseInt(navAvatar.style.top);
 
-        if (currentKeys[LEFT]) navAvatar.style.left = leftPos - 3 + 'px';
-        if (currentKeys[RIGHT]) navAvatar.style.left = leftPos + 3 + 'px';
-        if (currentKeys[UP]) navAvatar.style.top = topPos - 3 + 'px';
-        if (currentKeys[DOWN]) navAvatar.style.top = topPos + 3 + 'px';
+        if (currentKeys[LEFT] && canMove) navAvatar.style.left = leftPos - 3 + 'px';
+        if (currentKeys[RIGHT] && canMove) navAvatar.style.left = leftPos + 3 + 'px';
+        if (currentKeys[UP] && canMove) navAvatar.style.top = topPos - 3 + 'px';
+        if (currentKeys[DOWN] && canMove) navAvatar.style.top = topPos + 3 + 'px';
+        if (currentKeys[ACTION] && isAvatarInteracting) {
+          document.getElementById('menu').style.display = 'block';
+        }
+        if (currentKeys[BACK] && isAvatarInteracting) {
+          document.getElementById('menu').style.display = 'none';
+        }
 
         detectCollision();
         detectPlayerCollision();
@@ -77,8 +91,8 @@ export default function Home() {
       }
       window.requestAnimationFrame(moveLoop);
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; console.log(currentKeys) })
-      document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false })
+      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys)  */ })
+      document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false; })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
   }, [])
@@ -94,6 +108,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
+          <div id='menu' className={styles.menu} style={{ display: 'none' }}>q: quit / e:continue</div>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
