@@ -29,6 +29,7 @@ export default function Home() {
       const ACTION = ' ';
       const BACK = 'q';
 
+
       const allDetectableBlocks = document.querySelectorAll(".detectable");
 
       function getLinks() {
@@ -181,7 +182,7 @@ export default function Home() {
           <button type='button' onClick={() => { console.log("button pressed") }}>Click Me</button>
           <label htmlFor="coding">Check Me</label>
           <input type='checkbox' id='coding' />
-          <label htmlFor="coding">Radio Me</label>
+          <label htmlFor="rcoding">Radio Me</label>
           <input type='radio' id='rcoding' />
           <a href='https://developer.mozilla.org/en-US/'>link me</a>
 
