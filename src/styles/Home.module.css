@@ -4,6 +4,17 @@
   border: 2px solid black;
 }
 
+.menu {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  border: 2px solid black;
+  width: 200px;
+  height: 75px;
+  color: white;
+  background: black;
+}
+
 .navAvatar {
   position: absolute;
   z-index: 2;
