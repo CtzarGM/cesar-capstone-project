@@ -72,12 +72,17 @@ export default function Home() {
       function moveLoop() {
         let leftPos = parseInt(navAvatar.style.left);
         let topPos = parseInt(navAvatar.style.top);
+        let menuLeftPos = parseInt(navAvatar.style.left);
+        let menuTopPos = parseInt(navAvatar.style.top);
 
         if (currentKeys[LEFT] && canMove) navAvatar.style.left = leftPos - 3 + 'px';
         if (currentKeys[RIGHT] && canMove) navAvatar.style.left = leftPos + 3 + 'px';
         if (currentKeys[UP] && canMove) navAvatar.style.top = topPos - 3 + 'px';
         if (currentKeys[DOWN] && canMove) navAvatar.style.top = topPos + 3 + 'px';
+
         if (currentKeys[ACTION] && isAvatarInteracting) {
+          document.getElementById('menu').style.left = menuLeftPos + 50 + 'px';
+          document.getElementById('menu').style.top = menuTopPos - 50 + 'px';
           canMove = false;
           document.getElementById('menu').style.display = 'block';
         }
@@ -110,7 +115,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
-          <div id='menu' className={styles.menu} style={{ display: 'none' }}>e:continue / q:back</div>
+          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}>e: continue / q: back</div>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
