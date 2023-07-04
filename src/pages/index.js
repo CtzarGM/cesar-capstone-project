@@ -11,19 +11,49 @@ export default function Home() {
   useEffect(() => {
     if (document) {
       const navAvatar = document.getElementById("navAvatar");
+      let canMove = true;
       let isAvatarMoving = false;
       let isAvatarInteracting = false;
+
+      const menu = document.getElementById("menu");
+      const menuInnerText = document.getElementById("menuInnerText")
+      let isMenuOpen = false;
+      let performedAction = false;
 
       let currentKeys = [];
       const UP = 'w';
       const LEFT = 'a';
       const DOWN = 's';
       const RIGHT = 'd';
-      const ACTION = 'e';
+      const MENU = 'e'
+      const ACTION = ' ';
       const BACK = 'q';
 
-      let canMove = true;
       const allDetectableBlocks = document.querySelectorAll(".detectable");
+
+      function getLinks() {
+        let links = document.querySelectorAll("a");
+        for (let i = 0; i < links.length; i++) {
+          links[i].classList.add("detectable")
+          links[i].classList.add("clickable")
+        }
+      };
+
+      function getInteractions() {
+        let inputs = document.querySelectorAll("input");
+        for (let i = 0; i < inputs.length; i++) {
+          inputs[i].classList.add("detectable")
+          inputs[i].classList.add("clickable")
+        }
+      }
+
+      function getButtons() {
+        let buttons = document.querySelectorAll("button");
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].classList.add("detectable")
+          buttons[i].classList.add("clickable")
+        }
+      }
 
       function isColliding(block1, block2) {
         return !(
@@ -34,6 +64,33 @@ export default function Home() {
         );
       }
 
+      function openMenu() {
+        let menuLeftPos = parseInt(navAvatar.style.left);
+        let menuTopPos = parseInt(navAvatar.style.top);
+
+        menu.style.left = menuLeftPos + 51 + 'px';
+        menu.style.top = menuTopPos - 51 + 'px';
+        menu.style.display = 'block';
+
+        canMove = false;
+        performedAction = false;
+        isMenuOpen = true;
+        isAvatarInteracting = true;
+      }
+
+      function closeMenu() {
+        menu.style.display = 'none';
+
+        canMove = true;
+        isMenuOpen = false;
+        performedAction = true;
+      }
+
+      function performAction(block) {
+        block.click();
+        performedAction = true;
+        closeMenu();
+      }
 
       function detectCollision() {
         let me = navAvatar.getBoundingClientRect();
@@ -44,8 +101,11 @@ export default function Home() {
           let block = currentBlock.getBoundingClientRect();
 
           if (isColliding(me, block)) {
-
             currentBlock.style.background = 'green';
+            menuInnerText.innerHTML = currentBlock.innerHTML;
+            if (currentBlock.classList.contains('clickable') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
+              performAction(currentBlock);
+            }
           }
           else {
             currentBlock.style.background = 'red'
@@ -72,23 +132,18 @@ export default function Home() {
       function moveLoop() {
         let leftPos = parseInt(navAvatar.style.left);
         let topPos = parseInt(navAvatar.style.top);
-        let menuLeftPos = parseInt(navAvatar.style.left);
-        let menuTopPos = parseInt(navAvatar.style.top);
 
         if (currentKeys[LEFT] && canMove) navAvatar.style.left = leftPos - 3 + 'px';
         if (currentKeys[RIGHT] && canMove) navAvatar.style.left = leftPos + 3 + 'px';
         if (currentKeys[UP] && canMove) navAvatar.style.top = topPos - 3 + 'px';
         if (currentKeys[DOWN] && canMove) navAvatar.style.top = topPos + 3 + 'px';
 
-        if (currentKeys[ACTION] && isAvatarInteracting) {
-          document.getElementById('menu').style.left = menuLeftPos + 50 + 'px';
-          document.getElementById('menu').style.top = menuTopPos - 50 + 'px';
-          canMove = false;
-          document.getElementById('menu').style.display = 'block';
+        if (currentKeys[MENU] && isAvatarInteracting && !isMenuOpen) {
+          openMenu()
         }
-        if (currentKeys[BACK] && isAvatarInteracting) {
-          canMove = true;
-          document.getElementById('menu').style.display = 'none';
+
+        if (currentKeys[BACK] && isAvatarInteracting && isMenuOpen) {
+          closeMenu();
         }
 
         detectCollision();
@@ -97,8 +152,11 @@ export default function Home() {
         window.requestAnimationFrame(moveLoop);
       }
       window.requestAnimationFrame(moveLoop);
+      getLinks();
+      getInteractions();
+      getButtons();
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys)  */ })
+      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys) */ })
       document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false; })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
@@ -115,12 +173,18 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
-          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}>e: continue / q: back</div>
+          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}><div id='menuInnerText'>Menu inner text</div>spacebar: interact / q: go back</div>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
           <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '400px', background: 'red' }}>block3</div>
           <button type='button' onClick={() => { console.log("button pressed") }}>Click Me</button>
+          <label htmlFor="coding">Check Me</label>
+          <input type='checkbox' id='coding' />
+          <label htmlFor="coding">Radio Me</label>
+          <input type='radio' id='rcoding' />
+          <a href='https://developer.mozilla.org/en-US/'>link me</a>
+
         </div>
       </main >
     </>
