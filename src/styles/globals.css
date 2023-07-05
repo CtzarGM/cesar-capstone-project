@@ -5,7 +5,7 @@
 
 /* STAND */
 #navAvatar {
-  background-position: 0 0; /* initial default = facing down (every other direction below overrides this) */
+  background-position: 0 0;
 }
 #navAvatar[data-moving="false"][data-lastdirection="w"] {
   background-position: -64px 0;
