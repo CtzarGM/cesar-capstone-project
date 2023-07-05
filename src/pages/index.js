@@ -32,6 +32,18 @@ export default function Home() {
 
       const allDetectableBlocks = document.querySelectorAll(".detectable");
 
+      function avatarAtTopOfScreen() {
+        var avatar = navAvatar.getBoundingClientRect();
+        var currentWindow = window.innerHeight;
+        return (currentWindow * .4 > avatar.top + avatar.height);
+      }
+
+      function avatarAtBottomOfScreen() {
+        var avatar = navAvatar.getBoundingClientRect();
+        var currentWindow = window.innerHeight;
+        return (currentWindow * .6 < avatar.top);
+      }
+
       function getLinks() {
         let links = document.querySelectorAll("a");
         for (let i = 0; i < links.length; i++) {
@@ -131,13 +143,33 @@ export default function Home() {
       }
 
       function moveLoop() {
+        if (currentKeys[LEFT] || currentKeys[RIGHT] || currentKeys[UP] || currentKeys[DOWN]) {
+          if (!isAvatarMoving) { navAvatar.setAttribute('data-moving', true); isAvatarMoving = true; }
+        } else {
+          if (isAvatarMoving) { navAvatar.setAttribute('data-moving', false); isAvatarMoving = false; }
+        }
+
         let leftPos = parseInt(navAvatar.style.left);
         let topPos = parseInt(navAvatar.style.top);
 
-        if (currentKeys[LEFT] && canMove) navAvatar.style.left = leftPos - 3 + 'px';
-        if (currentKeys[RIGHT] && canMove) navAvatar.style.left = leftPos + 3 + 'px';
-        if (currentKeys[UP] && canMove) navAvatar.style.top = topPos - 3 + 'px';
-        if (currentKeys[DOWN] && canMove) navAvatar.style.top = topPos + 3 + 'px';
+        if (currentKeys[LEFT] && canMove) {
+          navAvatar.style.left = leftPos - 3 + 'px';
+        }
+        if (currentKeys[RIGHT] && canMove) {
+          navAvatar.style.left = leftPos + 3 + 'px';
+        }
+        if (currentKeys[UP] && canMove) {
+          navAvatar.style.top = topPos - 3 + 'px';
+          if (avatarAtTopOfScreen()) {
+            window.scrollBy(0, -3);
+          }
+        }
+        if (currentKeys[DOWN] && canMove) {
+          navAvatar.style.top = topPos + 3 + 'px';
+          if (avatarAtBottomOfScreen()) {
+            window.scrollBy(0, 3);
+          }
+        }
 
         if (currentKeys[MENU] && isAvatarInteracting && !isMenuOpen) {
           openMenu()
