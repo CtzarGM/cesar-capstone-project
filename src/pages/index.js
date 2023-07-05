@@ -179,8 +179,11 @@ export default function Home() {
           closeMenu();
         }
 
-        detectCollision();
-        detectPlayerCollision();
+        if (isAvatarMoving) {
+          detectCollision();
+          detectPlayerCollision();
+        }
+
 
         window.requestAnimationFrame(moveLoop);
       }
