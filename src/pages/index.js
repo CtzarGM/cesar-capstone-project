@@ -26,11 +26,23 @@ export default function Home() {
       const DOWN = 's';
       const RIGHT = 'd';
       const MENU = 'e'
-      const ACTION = ' ';
+      const ACTION = 'r';
       const BACK = 'q';
 
 
       const allDetectableBlocks = document.querySelectorAll(".detectable");
+
+      function avatarAtTopOfScreen() {
+        var avatar = navAvatar.getBoundingClientRect();
+        var currentWindow = window.innerHeight;
+        return (currentWindow * .4 > avatar.top + avatar.height);
+      }
+
+      function avatarAtBottomOfScreen() {
+        var avatar = navAvatar.getBoundingClientRect();
+        var currentWindow = window.innerHeight;
+        return (currentWindow * .6 < avatar.top);
+      }
 
       function getLinks() {
         let links = document.querySelectorAll("a");
@@ -122,22 +134,40 @@ export default function Home() {
           return isColliding(me, block)
         })) {
           isAvatarInteracting = true;
-          navAvatar.style.background = 'green';
         }
         else {
           isAvatarInteracting = false;
-          navAvatar.style.background = 'black';
         }
       }
 
       function moveLoop() {
+        if (currentKeys[LEFT] || currentKeys[RIGHT] || currentKeys[UP] || currentKeys[DOWN]) {
+          if (!isAvatarMoving) { navAvatar.setAttribute('data-moving', true); isAvatarMoving = true; }
+        } else {
+          if (isAvatarMoving) { navAvatar.setAttribute('data-moving', false); isAvatarMoving = false; }
+        }
+
         let leftPos = parseInt(navAvatar.style.left);
         let topPos = parseInt(navAvatar.style.top);
 
-        if (currentKeys[LEFT] && canMove) navAvatar.style.left = leftPos - 3 + 'px';
-        if (currentKeys[RIGHT] && canMove) navAvatar.style.left = leftPos + 3 + 'px';
-        if (currentKeys[UP] && canMove) navAvatar.style.top = topPos - 3 + 'px';
-        if (currentKeys[DOWN] && canMove) navAvatar.style.top = topPos + 3 + 'px';
+        if (currentKeys[LEFT] && canMove) {
+          navAvatar.style.left = leftPos - 3 + 'px';
+        }
+        if (currentKeys[RIGHT] && canMove) {
+          navAvatar.style.left = leftPos + 3 + 'px';
+        }
+        if (currentKeys[UP] && canMove) {
+          navAvatar.style.top = topPos - 3 + 'px';
+          if (avatarAtTopOfScreen()) {
+            window.scrollBy(0, -3);
+          }
+        }
+        if (currentKeys[DOWN] && canMove) {
+          navAvatar.style.top = topPos + 3 + 'px';
+          if (avatarAtBottomOfScreen()) {
+            window.scrollBy(0, 3);
+          }
+        }
 
         if (currentKeys[MENU] && isAvatarInteracting && !isMenuOpen) {
           openMenu()
@@ -147,8 +177,11 @@ export default function Home() {
           closeMenu();
         }
 
-        detectCollision();
-        detectPlayerCollision();
+        if (isAvatarMoving || isAvatarInteracting) {
+          detectCollision();
+          detectPlayerCollision();
+        }
+
 
         window.requestAnimationFrame(moveLoop);
       }
@@ -157,8 +190,22 @@ export default function Home() {
       getInteractions();
       getButtons();
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys) */ })
-      document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false; })
+      document.body.addEventListener("keydown", (infoAboutKey) => {
+        currentKeys[infoAboutKey.key] = true;
+        if ([UP, LEFT, DOWN, RIGHT].indexOf(infoAboutKey.key) < 0) {
+          return;
+        };
+        navAvatar.setAttribute('data-key-' + infoAboutKey.key, true);
+
+      });
+      document.body.addEventListener("keyup", (infoAboutKey) => {
+        currentKeys[infoAboutKey.key] = false;
+        if ([UP, LEFT, DOWN, RIGHT].indexOf(infoAboutKey.key) < 0) {
+          return;
+        };
+        navAvatar.setAttribute('data-key-' + infoAboutKey.key, '');
+        navAvatar.setAttribute('data-lastdirection', infoAboutKey.key);
+      })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
   }, [])
@@ -174,8 +221,8 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
-          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}><div id='menuInnerText'>Menu inner text</div>spacebar: interact / q: go back</div>
-          <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
+          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}><div id='menuInnerText'>Menu inner text</div>r: interact / q: go back</div>
+          <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px' }}></div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
           <div id='block3' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '400px', background: 'red' }}>block3</div>
