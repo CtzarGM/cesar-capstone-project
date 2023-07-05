@@ -20,6 +20,8 @@ export default function Home() {
       let isMenuOpen = false;
       let performedAction = false;
 
+      let allDetectableBlocks = [];
+
       let currentKeys = [];
       const UP = 'w';
       const LEFT = 'a';
@@ -28,9 +30,6 @@ export default function Home() {
       const MENU = 'e'
       const ACTION = 'r';
       const BACK = 'q';
-
-
-      const allDetectableBlocks = document.querySelectorAll(".detectable");
 
       function avatarAtTopOfScreen() {
         var avatar = navAvatar.getBoundingClientRect();
@@ -67,6 +66,18 @@ export default function Home() {
           buttons[i].classList.add("clickable")
         }
       }
+
+      function addClassToElements(callback) {
+        getLinks();
+        getInteractions();
+        getButtons();
+        allDetectableBlocks = document.querySelectorAll(".detectable");
+        callback();
+      }
+
+      addClassToElements(function () {
+        console.log(allDetectableBlocks);
+      });
 
       function isColliding(block1, block2) {
         return !(
@@ -196,7 +207,6 @@ export default function Home() {
           return;
         };
         navAvatar.setAttribute('data-key-' + infoAboutKey.key, true);
-
       });
       document.body.addEventListener("keyup", (infoAboutKey) => {
         currentKeys[infoAboutKey.key] = false;
