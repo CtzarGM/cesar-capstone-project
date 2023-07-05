@@ -197,9 +197,6 @@ export default function Home() {
         window.requestAnimationFrame(moveLoop);
       }
       window.requestAnimationFrame(moveLoop);
-      getLinks();
-      getInteractions();
-      getButtons();
 
       document.body.addEventListener("keydown", (infoAboutKey) => {
         currentKeys[infoAboutKey.key] = true;
