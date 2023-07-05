@@ -26,7 +26,7 @@ export default function Home() {
       const DOWN = 's';
       const RIGHT = 'd';
       const MENU = 'e'
-      const ACTION = ' ';
+      const ACTION = 'r';
       const BACK = 'q';
 
 
@@ -192,8 +192,22 @@ export default function Home() {
       getInteractions();
       getButtons();
 
-      document.body.addEventListener("keydown", (infoAboutKey) => { currentKeys[infoAboutKey.key] = true; /* console.log(currentKeys) */ })
-      document.body.addEventListener("keyup", (infoAboutKey) => { currentKeys[infoAboutKey.key] = false; })
+      document.body.addEventListener("keydown", (infoAboutKey) => {
+        currentKeys[infoAboutKey.key] = true;
+        if ([UP, LEFT, DOWN, RIGHT, MENU, ACTION, BACK].indexOf(infoAboutKey.key) < 0) {
+          return;
+        };
+        navAvatar.setAttribute('data-key-' + infoAboutKey.key, true);
+
+      });
+      document.body.addEventListener("keyup", (infoAboutKey) => {
+        currentKeys[infoAboutKey.key] = false;
+        if ([UP, LEFT, DOWN, RIGHT, MENU, ACTION, BACK].indexOf(infoAboutKey.key) < 0) {
+          return;
+        };
+        navAvatar.setAttribute('data-key-' + infoAboutKey.key, '');
+        navAvatar.setAttribute('data-lastdirection', infoAboutKey.key);
+      })
       window.addEventListener("DOMContentLoaded", () => { moveLoop() });
     }
   }, [])
@@ -209,7 +223,7 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className={styles.container}>
           <p>Use wasd to move up, left, down or right</p>
-          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}><div id='menuInnerText'>Menu inner text</div>spacebar: interact / q: go back</div>
+          <div id='menu' className={styles.menu} style={{ display: 'none', top: '250px', left: '550px' }}><div id='menuInnerText'>Menu inner text</div>r: interact / q: go back</div>
           <div id='navAvatar' className={styles.navAvatar} style={{ top: '200px', left: '500px', background: 'black' }}>nav</div>
           <div id='block1' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '70px', background: 'red' }}>block1</div>
           <div id='block2' className={`detectable ${styles.testBlock}`} style={{ top: '600px', left: '200px', background: 'red' }}>block2</div>
