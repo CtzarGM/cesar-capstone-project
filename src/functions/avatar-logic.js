@@ -133,6 +133,9 @@ export default function AvatarLogic() {
             }
 
             function performAction(block) {
+                if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
+                    navAvatar.background = currentBlock.background;
+                }
                 block.click();
                 performedAction = true;
                 closeMenu();
@@ -151,9 +154,6 @@ export default function AvatarLogic() {
                         menuInnerText.innerHTML = currentBlock.innerHTML;
                         if (currentBlock.classList.contains('clickable') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
                             performAction(currentBlock);
-                        }
-                        if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
-                            navAvatar.background = currentBlock.background;
                         }
                     }
                     else {
