@@ -6,12 +6,16 @@ export default function Component() {
     console.log(session)
 
     if (session) {
+        AvatarLogic()
         return (
             <>
                 <h3>
                     <img src={session.user.image} style={{ width: '100px', borderRadius: '50%' }} />
                     Signed in as {session.user.name}
                 </h3>
+
+                <div className="sprite link"></div>
+                <div className="sprite default"></div>
                 <br />
                 <button onClick={() => signOut()}>Sign out</button>
             </>
@@ -20,7 +24,7 @@ export default function Component() {
     return (
         <>
             Not signed in <br />
-            <button onClick={() => signIn()}>Sign in</button>
+            <button onClick={() => signIn({ callbackUrl: '/' })}>Sign in</button>
         </>
     )
 }

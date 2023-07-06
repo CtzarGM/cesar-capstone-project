@@ -33,13 +33,19 @@ export default function Home() {
       <main className={`${styles.main} ${inter.className}`}>
         <div className='container'>
           <h1 className='title'>Web-Avatar</h1>
-          <h2>The pixels yor browsing experience was missing</h2>
-          <h4>Are you coming back?</h4>
-          <h5>Go to your session</h5>
-          <h1><button className='action-button' onClick={handleSignIn}>Sign In</button></h1>
-          <h4>Are you new to the site?</h4>
-          <h5>Find out what its all about</h5>
-          <h1><button className='action-button' onClick={goToOnboardingPage}>Go to Onboarding</button></h1>
+          <h2>The pixels your browsing experience was missing</h2>
+          <div className='wrapper'>
+            <h4>Are you coming back?</h4>
+            <h5>Go to your session</h5>
+            <h1><button className='action-button' onClick={handleSignIn}>Sign In</button></h1>
+          </div>
+          <br />
+          <div className='wrapper'>
+            <h4>Are you new to the site?</h4>
+            <h5>Find out what its all about</h5>
+            <h1><button className='action-button' onClick={goToOnboardingPage}>Go to Onboarding</button></h1>
+          </div>
+
         </div>
       </main >
     </>

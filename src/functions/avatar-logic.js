@@ -166,6 +166,9 @@ export default function AvatarLogic() {
                     let block = currentBlock.getBoundingClientRect();
                     return isColliding(me, block)
                 })) {
+                    if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
+                        performAction(currentBlock);
+                    }
                     isAvatarInteracting = true;
                 }
                 else {
