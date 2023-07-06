@@ -5,10 +5,8 @@ import AvatarLogic from "@/functions/avatar-logic"
 export default function MyAvatar() {
 
     const { data: session } = useSession()
-
+    AvatarLogic();
     if (session) {
-        AvatarLogic()
-
         return (
             <>
                 <h3>
