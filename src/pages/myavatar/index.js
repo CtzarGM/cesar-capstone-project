@@ -19,8 +19,7 @@ export default function MyAvatar() {
                         </div>
                     </div>
                     <div className="container">
-                        <div className="sprite default">
-                        </div>
+                        <div className="sprite default">`${ }`</div>
                     </div>
                 </div>
                 <div className="sprite link"> </div>
