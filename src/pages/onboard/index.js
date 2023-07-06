@@ -13,7 +13,7 @@ export default function Onboard() {
     };
 
     const handleSignIn = async () => {
-        const result = await signIn();
+        const result = await signIn('github', { callbackUrl: '/myavatar' });
         if (result?.error) {
         } else if (result?.url) {
             router.push(result.url);
