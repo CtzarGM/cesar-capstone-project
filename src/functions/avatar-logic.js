@@ -133,9 +133,6 @@ export default function AvatarLogic() {
             }
 
             function performAction(block) {
-                if (currentBlock.classList.contains('.clickable') && currentBlock.classList.contains('.sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
-                    navAvatar.background = currentBlock.background;
-                }
                 block.click();
                 performedAction = true;
                 closeMenu();
