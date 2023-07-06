@@ -24,9 +24,9 @@ export default function MyAvatar() {
                     </div>
                 </div>
                 <br />
-                <div className="sprite link"></div>
+                <div className="sprite link"> </div>
                 <br />
-                <div className="sprite default"></div>
+                <div className="sprite default"> </div>
                 <br />
                 <button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</button>
             </>
