@@ -3,22 +3,20 @@ import AvatarLogic from "@/functions/avatar-logic"
 
 
 export default function MyAvatar() {
-    AvatarLogic()
 
     const { data: session } = useSession()
 
-    console.log(session)
-
     if (session) {
+        AvatarLogic()
+
         return (
             <>
                 <h3>
                     <img src={session.user.image} style={{ width: '100px', borderRadius: '50%' }} />
                     Signed in as {session.user.name}
                 </h3>
-
-                <div className="sprite link"></div>
-                <div className="sprite default"></div>
+                <div className="sprite link">aaa</div>
+                <div className="sprite default">aaa</div>
                 <br />
                 <button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</button>
             </>
