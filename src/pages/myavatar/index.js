@@ -5,7 +5,6 @@ import AvatarLogic from "@/functions/avatar-logic"
 export default function MyAvatar() {
 
     const { data: session } = useSession()
-    AvatarLogic();
     if (session) {
         return (
             <>
@@ -13,8 +12,21 @@ export default function MyAvatar() {
                     <img src={session.user.image} style={{ width: '100px', borderRadius: '50%' }} />
                     Signed in as {session.user.name}
                 </h3>
-                <div className="sprite link">aaa</div>
-                <div className="sprite default">aaa</div>
+                <div className="container">
+                    <div className="container">
+                        <div className="sprite link">
+                        </div>
+                    </div>
+                    <br />
+                    <div className="container">
+                        <div className="sprite default">
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div className="sprite link"></div>
+                <br />
+                <div className="sprite default"></div>
                 <br />
                 <button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</button>
             </>
@@ -26,4 +38,5 @@ export default function MyAvatar() {
             <button onClick={() => signIn()}>Sign in</button>
         </>
     )
+    AvatarLogic();
 }
