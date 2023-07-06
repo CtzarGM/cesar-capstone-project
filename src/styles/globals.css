@@ -1,6 +1,163 @@
+/* Set background color and font family */
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Courier New", monospace;
+}
+
+/* Center align the content */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
+  /* overflow: auto; */
+}
+
+/* Style headings */
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+h5 {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Style button */
+button {
+  background-color: #00ff00;
+  color: #000;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Style fieldset and labels */
+fieldset {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+/* Style checkboxes and radio buttons */
+input[type="checkbox"],
+input[type="radio"] {
+  margin-right: 0.5rem;
+}
+
+/* Style links */
+a {
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Add retro-gaming effect to links on hover */
+a:hover {
+  text-decoration: underline;
+}
+
+/* Add pixel art effect to links */
+a#l1 {
+  /* background-image: url("pixel-art-link.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1rem;
+}
+
+/* Style paragraph elements */
+p {
+  margin-bottom: 0.5rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  background-color: #000;
+  color: #fff;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Input */
+.input {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 0.5em;
+  margin: 0.5em;
+  border-radius: 0.25em;
+  border: none;
+  background-color: #f7f7f7;
+}
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  border: 2px solid black;
+}
+
+.menu {
+  position: absolute;
+  z-index: 3;
+  display: none;
+  border: 2px solid #00ff00;
+  width: 200px;
+  padding: 10px;
+  color: #00ff00;
+  background: #000;
+  font-size: 0.8rem;
+}
+
+.menu-inner-text {
+  margin-top: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.navAvatar {
+  position: absolute;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+}
+
 #navAvatar {
   background: url("data:image/png;base64,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")
     0 0 no-repeat;
+}
+
+#navAvatar:focus {
+  outline: 0;
 }
 
 /* STAND */
