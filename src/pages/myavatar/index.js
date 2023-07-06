@@ -1,4 +1,5 @@
 import { useSession, signIn, signOut } from "next-auth/react"
+import AvatarLogic from "@/functions/avatar-logic"
 export default function Component() {
 
     const { data: session } = useSession()
