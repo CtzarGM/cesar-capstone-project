@@ -152,6 +152,9 @@ export default function AvatarLogic() {
                         if (currentBlock.classList.contains('clickable') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
                             performAction(currentBlock);
                         }
+                        if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
+                            navAvatar.background = currentBlock.background;
+                        }
                     }
                     else {
                         currentBlock.style.background = 'darkblue'
@@ -166,9 +169,6 @@ export default function AvatarLogic() {
                     let block = currentBlock.getBoundingClientRect();
                     return isColliding(me, block)
                 })) {
-                    if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
-                        navAvatar.background = currentBlock.background;
-                    }
                     isAvatarInteracting = true;
                 }
                 else {
