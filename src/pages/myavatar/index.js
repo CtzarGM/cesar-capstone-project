@@ -15,10 +15,10 @@ export default function MyAvatar() {
                 </h3>
                 <div>
                     <div>
-                        <div className="sprite link"></div>
+                        <div className="sprite link clickable"></div>
                     </div>
                     <div>
-                        <div className="sprite default"></div>
+                        <div className="sprite default clickable"></div>
                     </div>
                 </div>
                 <br />
