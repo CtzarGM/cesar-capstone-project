@@ -167,7 +167,7 @@ export default function AvatarLogic() {
                     return isColliding(me, block)
                 })) {
                     if (currentBlock.classList.contains('clickable') && currentBlock.classList.contains('sprite') && currentKeys[ACTION] && isMenuOpen && !performedAction) {
-                        performAction(currentBlock);
+                        navAvatar.background = currentBlock.background;
                     }
                     isAvatarInteracting = true;
                 }

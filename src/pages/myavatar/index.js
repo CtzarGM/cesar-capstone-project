@@ -17,14 +17,14 @@ export default function Component() {
                 <div className="sprite link"></div>
                 <div className="sprite default"></div>
                 <br />
-                <button onClick={() => signOut()}>Sign out</button>
+                <button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</button>
             </>
         )
     }
     return (
         <>
             Not signed in <br />
-            <button onClick={() => signIn({ callbackUrl: '/' })}>Sign in</button>
+            <button onClick={() => signIn()}>Sign in</button>
         </>
     )
 }
