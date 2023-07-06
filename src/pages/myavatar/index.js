@@ -13,19 +13,15 @@ export default function MyAvatar() {
                     <img src={session.user.image} style={{ width: '100px', borderRadius: '50%' }} />
                     Signed in as {session.user.name}
                 </h3>
-                <div className="container">
-                    <div className="container">
-                        <div className="sprite link">
-                        </div>
+                <div>
+                    <div>
+                        <div className="sprite link"></div>
                     </div>
-                    <div className="container">
-                        <div className="sprite default">`${ }`</div>
+                    <div>
+                        <div className="sprite default"></div>
                     </div>
                 </div>
-                <div className="sprite link"> </div>
                 <br />
-                <div className="sprite default"> </div>
-
                 <button onClick={() => signOut({ callbackUrl: '/' })}>Sign out</button>
             </>
         )
